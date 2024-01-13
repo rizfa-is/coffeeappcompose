@@ -3,14 +3,18 @@ package com.issog.coffeeappcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.issog.coffeeappcompose.ui.component.Search
 import com.issog.coffeeappcompose.ui.theme.CoffeeappcomposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,22 +23,29 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoffeeappcomposeTheme {
                 // A surface container using the 'background' color from the theme
-                CoffeeApp(name = "Android")
+                CoffeeApp()
             }
         }
     }
 }
 
 @Composable
-fun CoffeeApp(name: String, modifier: Modifier = Modifier) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Text(
-            text = "Hello $name!",
-            modifier = modifier
+fun CoffeeApp() {
+    Column {
+        Banner()
+    }
+}
+
+@Composable
+fun Banner(modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+        Image(
+            painter = painterResource(id = R.drawable.banner),
+            contentDescription = "Banner Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.height(160.dp)
         )
+        Search()
     }
 }
 
@@ -42,6 +53,6 @@ fun CoffeeApp(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun CoffeeAppPreview() {
     CoffeeappcomposeTheme {
-        CoffeeApp("Android")
+        CoffeeApp()
     }
 }
