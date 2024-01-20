@@ -47,7 +47,7 @@ fun CategoryItem(
 @Preview(showBackground = true)
 @Composable
 fun CategoryItemPreview() {
-    CoffeeappcomposeTheme {
+    CoffeeappcomposeTheme(dynamicColor = false) {
         CategoryItem(
             category = Category(
             R.drawable.icon_category_cappuccino,

@@ -69,7 +69,7 @@ fun MenuItem(
 @Preview(showBackground = true)
 @Composable
 fun MenuItemPreview() {
-    CoffeeappcomposeTheme {
+    CoffeeappcomposeTheme(dynamicColor = false) {
         MenuItem(
             menu = Menu(
                 R.drawable.menu2,

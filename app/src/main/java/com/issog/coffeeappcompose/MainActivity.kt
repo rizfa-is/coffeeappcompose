@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -25,6 +27,7 @@ import com.issog.coffeeappcompose.model.Menu
 import com.issog.coffeeappcompose.model.dummyBestSellerMenu
 import com.issog.coffeeappcompose.model.dummyCategory
 import com.issog.coffeeappcompose.model.dummyMenu
+import com.issog.coffeeappcompose.ui.component.BottomBar
 import com.issog.coffeeappcompose.ui.component.CategoryItem
 import com.issog.coffeeappcompose.ui.component.HomeSection
 import com.issog.coffeeappcompose.ui.component.MenuItem
@@ -35,7 +38,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CoffeeappcomposeTheme {
+            CoffeeappcomposeTheme(dynamicColor = false) {
                 // A surface container using the 'background' color from the theme
                 CoffeeApp()
             }
@@ -44,26 +47,32 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CoffeeApp() {
-    Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
-    ) {
-        Banner()
+fun CoffeeApp(modifier: Modifier = Modifier) {
+    Scaffold(
+        bottomBar = { BottomBar() }
+    ) { innerPadding ->
+        Column(
+            modifier = modifier
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
+        ) {
+            Banner()
 
-        //Named parameter usage
-        HomeSection(
-            title = stringResource(id = R.string.section_category),
-            content =  { CategoryRow() }
-        )
+            //Named parameter usage
+            HomeSection(
+                title = stringResource(id = R.string.section_category),
+                content =  { CategoryRow() }
+            )
 
-        //Argument parameter usage
-        HomeSection(stringResource(id = R.string.section_favorite_menu), Modifier, {
+            //Argument parameter usage
+            HomeSection(stringResource(id = R.string.section_favorite_menu), Modifier, {
                 MenuRow(listMenu = dummyMenu)
-        })
+            })
 
-        //Lambda argument usage
-        HomeSection(title = stringResource(id = R.string.section_best_seller_menu)) {
-            MenuRow(listMenu = dummyBestSellerMenu)
+            //Lambda argument usage
+            HomeSection(title = stringResource(id = R.string.section_best_seller_menu)) {
+                MenuRow(listMenu = dummyBestSellerMenu)
+            }
         }
     }
 }
@@ -87,7 +96,8 @@ fun CategoryRow(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
     ) {
         items(dummyCategory, key = { it.textCategory }) {category ->
             CategoryItem(category = category)
@@ -114,7 +124,7 @@ fun MenuRow(
 @Preview(showBackground = true, device = Devices.PIXEL_2)
 @Composable
 fun CoffeeAppPreview() {
-    CoffeeappcomposeTheme {
+    CoffeeappcomposeTheme(dynamicColor = false) {
         CoffeeApp()
     }
 }

@@ -53,7 +53,7 @@ fun Search(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun SearchPreview() {
-    CoffeeappcomposeTheme {
+    CoffeeappcomposeTheme(dynamicColor = false) {
         Search()
     }
 }
